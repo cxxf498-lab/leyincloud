@@ -53,16 +53,24 @@
             </el-form-item>
             <el-form-item label="是否有紧急上线时间要求？">
               <el-radio-group v-model="formData.part1.urgent">
-                <el-radio value="是，___月内上线">是，___月内上线</el-radio>
+                <el-radio value="是">是</el-radio>
                 <el-radio value="否">否</el-radio>
               </el-radio-group>
+              <div v-if="formData.part1.urgent === '是'" class="sub-input">
+                <el-input v-model="formData.part1.urgentMonth" placeholder="请输入月份" style="width: 160px">
+                  <template #append>月内上线</template>
+                </el-input>
+              </div>
             </el-form-item>
             <el-form-item label="目前业务部署在哪里？">
               <el-radio-group v-model="formData.part1.currentDeploy">
                 <el-radio value="自建机房">自建机房</el-radio>
-                <el-radio value="其他云厂商（哪家：____）">其他云厂商（哪家：____）</el-radio>
+                <el-radio value="其他云厂商">其他云厂商</el-radio>
                 <el-radio value="从未上云">从未上云</el-radio>
               </el-radio-group>
+              <div v-if="formData.part1.currentDeploy === '其他云厂商'" class="sub-input">
+                <el-input v-model="formData.part1.deployProvider" placeholder="请输入云厂商名称，如：阿里云" style="width: 220px" />
+              </div>
             </el-form-item>
           </el-form>
         </div>
@@ -252,10 +260,23 @@
           <h3 class="step-title">第六部分：安全产品</h3>
           <el-form :model="formData.part6" label-position="top" size="large">
             <el-form-item label="是否需要安全防护产品？">
-              <el-radio-group v-model="formData.part6.skipSecurity">
-                <el-radio :value="false">需要，继续填写</el-radio>
-                <el-radio :value="true">不需要，跳过此部分</el-radio>
-              </el-radio-group>
+              <div class="toggle-row">
+                <div
+                  class="toggle-btn"
+                  :class="{ active: !formData.part6.skipSecurity }"
+                  @click="formData.part6.skipSecurity = false"
+                >
+                  <AppIcons name="shield" :size="18" :color="!formData.part6.skipSecurity ? '#fff' : '#888'" />
+                  <span>需要防护</span>
+                </div>
+                <div
+                  class="toggle-btn skip"
+                  :class="{ active: formData.part6.skipSecurity }"
+                  @click="formData.part6.skipSecurity = true"
+                >
+                  <span>不需要</span>
+                </div>
+              </div>
             </el-form-item>
             <template v-if="!formData.part6.skipSecurity">
               <el-divider content-position="left">DDoS 防护</el-divider>
@@ -311,10 +332,23 @@
           <h3 class="step-title">第七部分：TRTC 实时音视频</h3>
           <el-form :model="formData.part7" label-position="top" size="large">
             <el-form-item label="是否需要音视频通话/直播功能？">
-              <el-radio-group v-model="formData.part7.skipTrtc">
-                <el-radio :value="false">需要，继续填写</el-radio>
-                <el-radio :value="true">不需要，跳过此部分</el-radio>
-              </el-radio-group>
+              <div class="toggle-row">
+                <div
+                  class="toggle-btn"
+                  :class="{ active: !formData.part7.skipTrtc }"
+                  @click="formData.part7.skipTrtc = false"
+                >
+                  <AppIcons name="video" :size="18" :color="!formData.part7.skipTrtc ? '#fff' : '#888'" />
+                  <span>需要音视频</span>
+                </div>
+                <div
+                  class="toggle-btn skip"
+                  :class="{ active: formData.part7.skipTrtc }"
+                  @click="formData.part7.skipTrtc = true"
+                >
+                  <span>不需要</span>
+                </div>
+              </div>
             </el-form-item>
             <template v-if="!formData.part7.skipTrtc">
             <el-form-item label="主要应用场景？">
@@ -405,7 +439,8 @@ const currentStep = ref(0)
 const formData = reactive({
   part1: {
     companyName: '', contact: '', phone: '',
-    budget: '', urgent: '', currentDeploy: ''
+    budget: '', urgent: '', urgentMonth: '',
+    currentDeploy: '', deployProvider: ''
   },
   part2: {
     businessDesc: '', businessType: '', dau: '0',
@@ -486,4 +521,26 @@ function submitForm() {
 .field-hint { margin-left: 10px; color: var(--c-text2); font-size: 12px; }
 .form-actions { display: flex; justify-content: center; gap: 12px; }
 .form-actions .el-button { min-width: 120px; font-weight: 500; }
+.sub-input { margin-top: 12px; }
+
+/* 跳过/需要的切换按钮 */
+.toggle-row {
+  display: flex; gap: 10px;
+}
+.toggle-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 20px; border-radius: var(--radius);
+  border: 1.5px solid var(--c-border); background: var(--c-white);
+  cursor: pointer; font-size: 13px; font-weight: 500;
+  color: var(--c-text2); transition: all .15s;
+  user-select: none;
+}
+.toggle-btn:hover { border-color: #ccc; }
+.toggle-btn.active {
+  background: var(--c-primary); border-color: var(--c-primary);
+  color: #fff;
+}
+.toggle-btn.skip.active {
+  background: var(--c-text2); border-color: var(--c-text2);
+}
 </style>

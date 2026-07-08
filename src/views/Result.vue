@@ -118,6 +118,43 @@
       </div>
     </div>
 
+    <!-- 报价明细 -->
+    <div v-if="pricing && pricing.items.length" class="product-card">
+      <div class="pc-header">
+        <AppIcons name="dollar" :size="20" />
+        <span>月付报价明细（上浮 {{ (pricing.markupRate * 100).toFixed(0) }}%）</span>
+        <span class="pc-tag">仅供参考</span>
+      </div>
+      <div class="pc-body">
+        <table class="price-table">
+          <thead>
+            <tr>
+              <th>产品</th>
+              <th>配置</th>
+              <th class="num">官方参考价</th>
+              <th class="num">报价</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in pricing.items" :key="item.product">
+              <td>{{ item.product }}</td>
+              <td>{{ item.spec }}</td>
+              <td class="num">¥{{ item.official.toLocaleString() }}</td>
+              <td class="num offer">¥{{ item.offer.toLocaleString() }}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2" class="total-label">合计</td>
+              <td class="num">¥{{ pricing.total.toLocaleString() }}</td>
+              <td class="num total">¥{{ pricing.totalWithMarkup.toLocaleString() }}/月</td>
+            </tr>
+          </tfoot>
+        </table>
+        <p class="pricing-note">以上为月度预估报价，已上浮 {{ (pricing.markupRate * 100).toFixed(0) }}%，不低于官方原价。实际价格以腾讯云官网为准。</p>
+      </div>
+    </div>
+
     <!-- 温馨提示 -->
     <div class="reminder">
       <AppIcons name="zap" :size="16" color="#22C55E" />
@@ -138,6 +175,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { matchRecommendation } from '../engine/matcher.js'
+import { calculatePricing } from '../engine/pricing.js'
 
 const router = useRouter()
 const result = ref({
@@ -150,11 +188,15 @@ const result = ref({
   extra: { items: [], reason: '' },
   billing: '', note: '', reminder: ''
 })
+const pricing = ref(null)
 
 onMounted(() => {
   const stored = sessionStorage.getItem('survey_result')
   if (!stored) { router.replace('/survey'); return }
-  try { result.value = matchRecommendation(JSON.parse(stored)) }
+  try {
+    result.value = matchRecommendation(JSON.parse(stored))
+    pricing.value = calculatePricing(result.value)
+  }
   catch { router.replace('/survey') }
 })
 
@@ -218,4 +260,15 @@ dd { font-size: 13px; font-weight: 500; }
 
 .actions { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
 .actions .el-button { display: inline-flex !important; align-items: center; gap: 5px; font-weight: 500; }
+
+/* 报价表格 */
+.price-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.price-table th, .price-table td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--c-border); }
+.price-table th { font-size: 11px; font-weight: 600; color: var(--c-text2); background: #FAFBFC; }
+.price-table .num { text-align: right; white-space: nowrap; }
+.price-table .offer { font-weight: 600; color: var(--c-primary); }
+.price-table tfoot td { border-bottom: none; font-weight: 600; }
+.price-table .total-label { color: var(--c-text); }
+.price-table .total { color: var(--c-primary); font-size: 15px; }
+.pricing-note { font-size: 11px; color: var(--c-text3); margin-top: 12px; line-height: 1.5; }
 </style>

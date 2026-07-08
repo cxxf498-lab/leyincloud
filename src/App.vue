@@ -5,7 +5,7 @@
         <div class="header-inner">
           <div class="header-left" @click="$router.push('/')">
             <AppIcons name="logo" :size="24" color="#111" />
-            <span class="logo-title">选品</span>
+            <span class="logo-title">乐银云选品</span>
           </div>
           <div class="header-right">
             <el-button text class="nav-link" @click="$router.push('/')">

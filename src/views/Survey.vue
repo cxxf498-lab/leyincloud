@@ -476,44 +476,55 @@ function submitForm() {
 
 <style scoped>
 .survey-container {
-  max-width: 900px;
+  max-width: 880px;
   margin: 0 auto;
-  padding: 24px 16px 100px;
+  padding: 32px 16px 100px;
 }
 .survey-header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
 }
 .survey-header h2 {
-  font-size: 28px;
-  color: #303133;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
   margin-bottom: 8px;
+  letter-spacing: -0.3px;
 }
 .survey-header .subtitle {
-  color: #909399;
-  font-size: 14px;
+  color: var(--text-secondary);
+  font-size: 13px;
 }
 .steps-nav {
-  margin-bottom: 32px;
+  margin-bottom: 36px;
+  padding: 20px 0;
 }
 .step-title {
-  font-size: 18px;
-  color: #303133;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-primary);
   margin-bottom: 24px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #ebeef5;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--primary-light);
 }
 .form-area {
-  margin-bottom: 24px;
+  margin-bottom: 28px;
+}
+.form-area :deep(.el-card__body) {
+  padding: 28px 32px;
 }
 .field-hint {
   margin-left: 12px;
-  color: #909399;
-  font-size: 13px;
+  color: var(--text-secondary);
+  font-size: 12px;
 }
 .form-actions {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 14px;
+}
+.form-actions .el-button {
+  min-width: 120px;
+  font-weight: 500;
 }
 </style>

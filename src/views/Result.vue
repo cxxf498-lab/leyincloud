@@ -245,50 +245,61 @@ function copyResult() {
 .result-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 24px 16px 80px;
+  padding: 32px 16px 80px;
 }
 .result-header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
 }
 .result-header h2 {
-  font-size: 28px;
-  color: #303133;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
   margin-bottom: 8px;
+  letter-spacing: -0.3px;
 }
 .result-header .subtitle {
-  color: #909399;
-  font-size: 14px;
+  color: var(--text-secondary);
+  font-size: 13px;
 }
 .summary-info {
-  margin-top: 12px;
-  font-size: 14px;
-  color: #409eff;
-  background: #ecf5ff;
-  padding: 8px 16px;
-  border-radius: 6px;
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 8px 18px;
+  border-radius: 20px;
   display: inline-block;
+  font-weight: 500;
 }
 .product-card {
   margin-bottom: 20px;
 }
+.product-card :deep(.el-card__header) {
+  padding: 16px 24px;
+  background: #FAFBFC;
+  border-bottom: 1px solid var(--border-light);
+}
 .card-header {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-size: 16px;
   font-weight: 600;
+  color: var(--text-primary);
 }
 .card-icon {
   font-size: 20px;
+  line-height: 1;
 }
 .skip-notice {
   margin-bottom: 20px;
 }
 .section-reason {
-  margin-top: 12px;
-  color: #909399;
-  font-size: 14px;
+  margin-top: 14px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.6;
 }
 .security-list {
   display: flex;
@@ -302,29 +313,35 @@ function copyResult() {
   gap: 8px;
 }
 .item-note {
-  color: #909399;
-  font-size: 13px;
+  color: var(--text-secondary);
+  font-size: 12px;
 }
 .billing-card .billing-text {
   font-size: 16px;
   font-weight: 600;
-  color: #e6a23c;
+  color: var(--warning);
 }
 .billing-note {
   margin-top: 12px;
-  color: #909399;
-  font-size: 14px;
+  color: var(--text-secondary);
+  font-size: 13px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 6px;
+  line-height: 1.5;
 }
 .reminder {
   margin: 24px 0;
+  border-radius: var(--radius-md) !important;
 }
 .result-actions {
   display: flex;
   justify-content: center;
-  gap: 16px;
-  margin-top: 8px;
+  gap: 14px;
+  margin-top: 12px;
+}
+.result-actions .el-button {
+  min-width: 130px;
+  font-weight: 500;
 }
 </style>

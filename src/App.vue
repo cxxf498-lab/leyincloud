@@ -4,32 +4,24 @@
       <el-header class="app-header">
         <div class="header-inner">
           <div class="header-left" @click="$router.push('/')">
-            <div class="logo-icon">
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <rect width="28" height="28" rx="6" fill="#1677FF"/>
-                <path d="M7 14C7 11.5 8.5 9 11 8L12 9.5C10.2 10.3 9 12 9 14C9 16 10.2 17.7 12 18.5L11 20C8.5 19 7 16.5 7 14Z" fill="white"/>
-                <path d="M11 14C11 12.3 12.3 11 14 11C15.7 11 17 12.3 17 14C17 15.7 15.7 17 14 17C12.3 17 11 15.7 11 14Z" fill="white"/>
-                <path d="M17 9.5L16 8C18.5 9 20 11.5 20 14C20 16.5 18.5 19 16 20L17 18.5C18.8 17.7 20 16 20 14C20 12 18.8 10.3 17 9.5Z" fill="white"/>
-              </svg>
-            </div>
-            <div class="logo-text">
-              <span class="logo-title">选品</span>
-              <span class="logo-sub">Cloud Matcher</span>
-            </div>
+            <AppIcons name="logo" :size="24" color="#111" />
+            <span class="logo-title">选品</span>
           </div>
           <div class="header-right">
-            <el-button text class="nav-btn" @click="$router.push('/')">
+            <el-button text class="nav-link" @click="$router.push('/')">
+              <AppIcons name="home" :size="18" />
               <span>首页</span>
             </el-button>
-            <el-button type="primary" size="small" round class="cta-btn" @click="$router.push('/survey')">
-              新建调研
+            <el-button type="primary" size="small" class="cta-btn" @click="$router.push('/survey')">
+              <AppIcons name="plus" :size="16" color="#fff" />
+              <span>新建调研</span>
             </el-button>
           </div>
         </div>
       </el-header>
-      <el-main>
+      <el-main class="app-main">
         <router-view v-slot="{ Component }">
-          <transition name="page-fade" mode="out-in">
+          <transition name="fade" mode="out-in">
             <component :is="Component" />
           </transition>
         </router-view>
@@ -42,206 +34,117 @@
 </script>
 
 <style>
-/* === 全局设计变量 === */
 :root {
-  --primary: #1677FF;
-  --primary-dark: #0958D9;
-  --primary-light: #E8F3FF;
-  --success: #52C41A;
-  --warning: #FA8C16;
-  --danger: #FF4D4F;
-  --bg: #F0F2F5;
-  --bg-white: #FFFFFF;
-  --text-primary: #1D2129;
-  --text-secondary: #86909C;
-  --text-tertiary: #C9CDD4;
-  --border: #E5E6EB;
-  --border-light: #F2F3F5;
-  --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.04);
-  --shadow-md: 0 4px 16px -4px rgba(0,0,0,0.08);
-  --shadow-lg: 0 8px 24px -6px rgba(0,0,0,0.12);
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --transition: 0.2s ease;
+  --c-bg:       #FAFAFA;
+  --c-white:    #FFFFFF;
+  --c-text:     #1A1A1A;
+  --c-text2:    #888888;
+  --c-text3:    #BBBBBB;
+  --c-border:   #ECECEC;
+  --c-primary:  #111111;
+  --c-accent:   #3B82F6;
+  --c-success:  #22C55E;
+  --c-warning:  #F59E0B;
+  --c-danger:   #EF4444;
+  --radius:     6px;
+  --shadow:     0 0 0 1px rgba(0,0,0,.03), 0 1px 3px rgba(0,0,0,.06);
+  --shadow-hov: 0 0 0 1px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.08);
 }
 
-/* === 全局样式覆盖 === */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", "PingFang SC", sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: var(--bg);
-  color: var(--text-primary);
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-#app-shell {
-  min-height: 100vh;
-  background: var(--bg);
-}
+#app-shell { min-height: 100vh; background: var(--c-bg); }
 
-/* Element Plus 全局覆盖 */
+/* Element Plus 全局重写 */
 .el-card {
-  border-radius: var(--radius-lg) !important;
-  border: 1px solid var(--border) !important;
-  box-shadow: var(--shadow-sm) !important;
-  transition: box-shadow var(--transition);
+  border-radius: var(--radius) !important;
+  border: 1px solid var(--c-border) !important;
+  box-shadow: var(--shadow) !important;
+  background: var(--c-white) !important;
+  transition: box-shadow .2s;
 }
-.el-card:hover {
-  box-shadow: var(--shadow-md) !important;
-}
+.el-card:hover { box-shadow: var(--shadow-hov) !important; }
 
-.el-button--primary {
-  background: var(--primary) !important;
-  border-color: var(--primary) !important;
-  border-radius: var(--radius-sm) !important;
+.el-button {
+  border-radius: var(--radius) !important;
   font-weight: 500 !important;
-  transition: all var(--transition);
+  transition: all .15s;
+}
+.el-button--primary {
+  background: var(--c-primary) !important;
+  border-color: var(--c-primary) !important;
 }
 .el-button--primary:hover {
-  background: var(--primary-dark) !important;
-  border-color: var(--primary-dark) !important;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(22,119,255,0.35);
+  background: #333 !important;
+  border-color: #333 !important;
 }
-
-.el-button--success {
-  border-radius: var(--radius-sm) !important;
-  font-weight: 500 !important;
-}
+.el-button--success { background: var(--c-success) !important; border-color: var(--c-success) !important; }
 
 .el-radio-button__inner {
-  border-radius: 4px !important;
-  margin-right: 4px !important;
-  border: 1px solid var(--border) !important;
-  transition: all var(--transition);
+  border-radius: 4px !important; margin-right: 4px !important;
+  border: 1px solid var(--c-border) !important;
+  font-size: 13px !important;
 }
 .el-radio-button__original-radio:checked + .el-radio-button__inner {
-  background: var(--primary) !important;
-  border-color: var(--primary) !important;
-  box-shadow: none !important;
+  background: var(--c-primary) !important; border-color: var(--c-primary) !important;
 }
-.el-radio-button:first-child .el-radio-button__inner {
-  border-radius: 4px !important;
-}
-.el-radio-button:last-child .el-radio-button__inner {
-  border-radius: 4px !important;
-}
+.el-radio-button:first-child .el-radio-button__inner,
+.el-radio-button:last-child .el-radio-button__inner { border-radius: 4px !important; }
 
 .el-input__wrapper {
-  border-radius: var(--radius-sm) !important;
-  box-shadow: none !important;
-  border: 1px solid var(--border) !important;
-  transition: all var(--transition);
+  border-radius: var(--radius) !important; box-shadow: none !important;
+  border: 1px solid var(--c-border) !important;
 }
-.el-input__wrapper:hover {
-  border-color: var(--primary) !important;
-}
+.el-input__wrapper:hover { border-color: #ccc !important; }
 .el-input__wrapper.is-focus {
-  border-color: var(--primary) !important;
-  box-shadow: 0 0 0 2px rgba(22,119,255,0.1) !important;
+  border-color: var(--c-primary) !important;
+  box-shadow: 0 0 0 1px var(--c-primary) !important;
 }
 
-.el-steps {
-  --el-step-text-color: var(--text-secondary);
-}
-.el-step__title.is-process {
-  color: var(--primary) !important;
-  font-weight: 600 !important;
-}
-.el-step__head.is-process {
-  color: var(--primary) !important;
-  border-color: var(--primary) !important;
-}
+.el-steps { --el-step-text-color: var(--c-text2); }
+.el-step__title.is-process { color: var(--c-primary) !important; font-weight: 600 !important; }
+.el-step__head.is-process { color: var(--c-primary) !important; border-color: var(--c-primary) !important; }
 
-.el-divider__text {
-  font-weight: 600 !important;
-  color: var(--text-secondary) !important;
-}
+.el-divider__text { font-weight: 500 !important; color: var(--c-text2) !important; font-size: 12px !important; }
 
-/* === 页面过渡动画 === */
-.page-fade-enter-active,
-.page-fade-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-.page-fade-enter-from {
-  opacity: 0;
-  transform: translateY(8px);
-}
-.page-fade-leave-to {
-  opacity: 0;
-  transform: translateY(-8px);
-}
+.el-alert { border-radius: var(--radius) !important; }
+
+.fade-enter-active, .fade-leave-active { transition: opacity .2s; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
 </style>
 
 <style scoped>
 .app-header {
-  background: rgba(255,255,255,0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 0;
-  height: 56px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  background: rgba(255,255,255,.9);
+  backdrop-filter: saturate(180%) blur(10px);
+  -webkit-backdrop-filter: saturate(180%) blur(10px);
+  border-bottom: 1px solid var(--c-border);
+  padding: 0; height: 52px;
+  position: sticky; top: 0; z-index: 100;
 }
 .header-inner {
-  max-width: 960px;
-  margin: 0 auto;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
+  max-width: 880px; margin: 0 auto; height: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px;
 }
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  user-select: none;
-}
-.logo-icon {
-  display: flex;
-  align-items: center;
-}
-.logo-text {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-}
-.logo-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: 0.5px;
-}
-.logo-sub {
-  font-size: 11px;
-  color: var(--text-tertiary);
-  font-weight: 500;
-  letter-spacing: 0.5px;
-}
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.nav-btn {
-  color: var(--text-secondary) !important;
-  font-size: 14px;
-  font-weight: 500;
-  transition: color var(--transition);
-}
-.nav-btn:hover {
-  color: var(--primary) !important;
-}
+.header-left { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.logo-title { font-size: 17px; font-weight: 700; color: var(--c-text); letter-spacing: -0.3px; }
+.header-right { display: flex; align-items: center; gap: 6px; }
+.nav-link { color: var(--c-text2) !important; font-size: 13px; gap: 5px; }
+.nav-link:hover { color: var(--c-text) !important; }
 .cta-btn {
-  font-weight: 600 !important;
-  padding: 6px 20px !important;
-  height: 34px !important;
+  font-size: 13px !important; font-weight: 600 !important;
+  padding: 5px 16px !important; height: 32px !important;
+  display: inline-flex !important; align-items: center; gap: 4px;
 }
+.app-main { max-width: 880px; margin: 0 auto; padding: 32px 16px 80px; }
 </style>

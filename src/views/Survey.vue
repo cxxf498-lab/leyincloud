@@ -475,56 +475,15 @@ function submitForm() {
 </script>
 
 <style scoped>
-.survey-container {
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 32px 16px 100px;
-}
-.survey-header {
-  text-align: center;
-  margin-bottom: 36px;
-}
-.survey-header h2 {
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 8px;
-  letter-spacing: -0.3px;
-}
-.survey-header .subtitle {
-  color: var(--text-secondary);
-  font-size: 13px;
-}
-.steps-nav {
-  margin-bottom: 36px;
-  padding: 20px 0;
-}
-.step-title {
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 24px;
-  padding-bottom: 14px;
-  border-bottom: 2px solid var(--primary-light);
-}
-.form-area {
-  margin-bottom: 28px;
-}
-.form-area :deep(.el-card__body) {
-  padding: 28px 32px;
-}
-.field-hint {
-  margin-left: 12px;
-  color: var(--text-secondary);
-  font-size: 12px;
-}
-.form-actions {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-}
-.form-actions .el-button {
-  min-width: 120px;
-  font-weight: 500;
-}
+.survey-container { max-width: 720px; margin: 0 auto; }
+.survey-header { text-align: center; margin-bottom: 40px; }
+.survey-header h2 { font-size: 22px; font-weight: 700; color: var(--c-text); letter-spacing: -0.3px; margin-bottom: 6px; }
+.survey-header .subtitle { color: var(--c-text2); font-size: 13px; }
+.steps-nav { margin-bottom: 40px; }
+.step-title { font-size: 16px; font-weight: 600; color: var(--c-text); margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--c-border); }
+.form-area { margin-bottom: 32px; }
+.form-area :deep(.el-card__body) { padding: 28px 32px; }
+.field-hint { margin-left: 10px; color: var(--c-text2); font-size: 12px; }
+.form-actions { display: flex; justify-content: center; gap: 12px; }
+.form-actions .el-button { min-width: 120px; font-weight: 500; }
 </style>

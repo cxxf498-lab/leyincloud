@@ -176,6 +176,17 @@
                 <el-radio value="不确定">不确定</el-radio>
               </el-radio-group>
             </el-form-item>
+            <el-divider content-position="left">带宽需求</el-divider>
+            <el-form-item label="预计需要多少带宽？">
+              <el-radio-group v-model="formData.part3.bandwidth">
+                <el-radio-button value="1Mbps">1Mbps</el-radio-button>
+                <el-radio-button value="3Mbps">3Mbps</el-radio-button>
+                <el-radio-button value="5Mbps">5Mbps</el-radio-button>
+                <el-radio-button value="10Mbps">10Mbps</el-radio-button>
+                <el-radio-button value="10Mbps以上">10Mbps以上</el-radio-button>
+                <el-radio-button value="不确定">不确定</el-radio-button>
+              </el-radio-group>
+            </el-form-item>
           </el-form>
         </div>
 
@@ -450,7 +461,7 @@ const formData = reactive({
   },
   part3: {
     cpuCores: '', memorySize: '', cpuRequirement: '',
-    billingMode: '', spotInstance: ''
+    billingMode: '', spotInstance: '', bandwidth: ''
   },
   part4: {
     storageSize: '100', speedRequirement: '',

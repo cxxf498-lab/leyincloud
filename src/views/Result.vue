@@ -19,6 +19,7 @@
           <dt>系列说明</dt><dd>{{ result.cvm.seriesNote }}</dd>
           <dt>CPU</dt><dd>{{ result.cvm.cpu }}</dd>
           <dt>内存</dt><dd>{{ result.cvm.memory }}</dd>
+          <dt>带宽</dt><dd>{{ result.cvm.bandwidth }}</dd>
           <dt>数量</dt><dd>{{ result.cvm.count }}</dd>
         </dl>
         <p class="pc-reason">{{ result.cvm.reason }}</p>
@@ -141,7 +142,7 @@ import { matchRecommendation } from '../engine/matcher.js'
 const router = useRouter()
 const result = ref({
   summary: '',
-  cvm: { series: '', seriesNote: '', cpu: '', memory: '', count: '', reason: '' },
+  cvm: { series: '', seriesNote: '', cpu: '', memory: '', bandwidth: '', count: '', reason: '' },
   cbs: { type: '', typeNote: '', size: '', reason: '' },
   mysql: null, mysqlReason: '',
   security: { items: [], reason: '' },
@@ -164,7 +165,7 @@ function copyResult() {
   const r = result.value
   let t = '【腾讯云产品配置推荐方案】\n\n'
   if (r.summary) t += `${r.summary}\n\n`
-  t += `云服务器 CVM\n  ${r.cvm.series} / CPU ${r.cvm.cpu} / 内存 ${r.cvm.memory} / ${r.cvm.count}\n\n`
+  t += `云服务器 CVM\n  ${r.cvm.series} / CPU ${r.cvm.cpu} / 内存 ${r.cvm.memory} / 带宽 ${r.cvm.bandwidth} / ${r.cvm.count}\n\n`
   t += `云硬盘 CBS\n  ${r.cbs.type} / ${r.cbs.size}\n\n`
   if (r.mysql) t += `云数据库 MySQL\n  ${r.mysql.arch} / ${r.mysql.cpu} / ${r.mysql.memory} / ${r.mysql.storage}\n\n`
   if (r.security?.items.length) {

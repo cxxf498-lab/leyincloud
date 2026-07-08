@@ -174,6 +174,7 @@ function buildCVMResult(cvmRule) {
     seriesNote: series.note,
     cpu: cvmRule.cpu,
     memory: cvmRule.memory,
+    bandwidth: cvmRule.bandwidth,
     count: cvmRule.count,
     reason: cvmRule.reason,
   }

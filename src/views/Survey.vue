@@ -521,7 +521,7 @@ function submitForm() {
 .field-hint { margin-left: 10px; color: var(--c-text2); font-size: 12px; }
 .form-actions { display: flex; justify-content: center; gap: 12px; }
 .form-actions .el-button { min-width: 120px; font-weight: 500; }
-.sub-input { margin-top: 12px; }
+.sub-input { margin-top: 6px; padding-left: 2px; }
 
 /* 跳过/需要的切换按钮 */
 .toggle-row {

@@ -232,6 +232,7 @@ export const BUDGET_LEVELS = {
   '2-10万': { level: 3, name: '较高预算' },
   '10-50万': { level: 4, name: '高预算' },
   '50万以上': { level: 5, name: '超高预算' },
+  '不确定': { level: 0, name: '预算未定' },
 }
 
 export function recommendCBSBySpeed(speedRequirement) {

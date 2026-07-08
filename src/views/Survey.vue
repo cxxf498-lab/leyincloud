@@ -49,6 +49,7 @@
                 <el-radio-button value="2-10万">2-10万</el-radio-button>
                 <el-radio-button value="10-50万">10-50万</el-radio-button>
                 <el-radio-button value="50万以上">50万以上</el-radio-button>
+                <el-radio-button value="不确定">不确定</el-radio-button>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="是否有紧急上线时间要求？">

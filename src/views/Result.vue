@@ -217,7 +217,22 @@ function copyResult() {
     r.extra.items.forEach(i => t += `  - ${i.name}\n`)
     t += '\n'
   }
-  t += `计费建议：${r.billing}\n\n💡 ${r.reminder}\n`
+  t += `计费建议：${r.billing}\n`
+  if (r.note) t += `${r.note}\n`
+  t += '\n'
+
+  // 报价明细
+  if (pricing.value?.items.length) {
+    t += '──────── 预估月付费用 ────────\n'
+    pricing.value.items.forEach(i => {
+      t += `  ${i.product} ｜ ${i.spec}  ￥${i.offer.toLocaleString()}\n`
+    })
+    t += `  ─────────────────────\n`
+    t += `  预估合计：￥${pricing.value.totalWithMarkup.toLocaleString()}/月\n\n`
+    t += '  以上为预估费用，实际以腾讯云官网为准。\n\n'
+  }
+
+  t += `💡 ${r.reminder}\n`
   navigator.clipboard.writeText(t).then(
     () => ElMessage.success('方案已复制，可直接发送给客户'),
     () => ElMessage.warning('复制失败，请手动选择文本')

@@ -12,6 +12,10 @@
               <AppIcons name="home" :size="18" />
               <span>首页</span>
             </el-button>
+            <el-button text class="nav-link" @click="$router.push('/history')">
+              <AppIcons name="clipboard" :size="18" />
+              <span>历史记录</span>
+            </el-button>
             <el-button type="primary" size="small" class="cta-btn" @click="$router.push('/survey')">
               <AppIcons name="plus" :size="16" color="#fff" />
               <span>新建调研</span>

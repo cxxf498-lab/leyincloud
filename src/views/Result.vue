@@ -172,6 +172,7 @@ import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { matchRecommendation } from '../engine/matcher.js'
 import { calculatePricing } from '../engine/pricing.js'
+import { saveToHistory, formatId } from '../utils/storage.js'
 
 const router = useRouter()
 const result = ref({
@@ -190,8 +191,23 @@ onMounted(() => {
   const stored = sessionStorage.getItem('survey_result')
   if (!stored) { router.replace('/survey'); return }
   try {
-    result.value = matchRecommendation(JSON.parse(stored))
+    const formData = JSON.parse(stored)
+    result.value = matchRecommendation(formData)
     pricing.value = calculatePricing(result.value)
+    // 保存到历史记录（仅首次进入时保存）
+    if (!sessionStorage.getItem('result_saved')) {
+      saveToHistory({
+        id: formatId(),
+        companyName: formData.part1?.companyName || '',
+        businessType: formData.part2?.businessType || '',
+        createdAt: new Date().toLocaleString('zh-CN'),
+        totalOffer: pricing.value.totalWithMarkup,
+        formData,
+        recommendation: result.value,
+        pricing: pricing.value,
+      })
+      sessionStorage.setItem('result_saved', '1')
+    }
   }
   catch { router.replace('/survey') }
 })

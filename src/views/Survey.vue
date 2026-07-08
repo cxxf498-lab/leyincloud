@@ -159,7 +159,7 @@
                 <el-radio value="不确定">不确定</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="是否可以接受"竞价实例"（价格极低但可能被回收）？">
+            <el-form-item label="是否可以接受【竞价实例】（价格极低但可能被回收）？">
               <el-radio-group v-model="formData.part3.spotInstance">
                 <el-radio value="可以（适合无状态可中断任务）">可以</el-radio>
                 <el-radio value="不可以（线上业务不能中断）">不可以</el-radio>

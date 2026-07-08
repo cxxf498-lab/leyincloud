@@ -251,50 +251,58 @@
         <div v-show="currentStep === 5">
           <h3 class="step-title">第六部分：安全产品</h3>
           <el-form :model="formData.part6" label-position="top" size="large">
-            <el-divider content-position="left">DDoS 防护</el-divider>
-            <el-form-item label="是否曾被DDoS攻击过？">
-              <el-radio-group v-model="formData.part6.ddosAttacked">
-                <el-radio value="是（峰值：______ Gbps）">是</el-radio>
-                <el-radio value="否">否</el-radio>
-                <el-radio value="不清楚">不清楚</el-radio>
+            <el-form-item label="是否需要安全防护产品？">
+              <el-radio-group v-model="formData.part6.skipSecurity">
+                <el-radio :value="false">需要，继续填写</el-radio>
+                <el-radio :value="true">不需要，跳过此部分</el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="业务是否容易被攻击？（游戏、电商、金融是重灾区）">
-              <el-radio-group v-model="formData.part6.ddosEasyTarget">
-                <el-radio value="是">是</el-radio>
-                <el-radio value="否">否</el-radio>
-                <el-radio value="不确定">不确定</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item label="需要防护多少个公网IP？">
-              <el-input-number v-model="formData.part6.ddosIpCount" :min="1" :max="100" />
-            </el-form-item>
-            <el-divider content-position="left">Web 应用防火墙 WAF</el-divider>
-            <el-form-item label="是否有网站/Web业务？">
-              <el-radio-group v-model="formData.part6.hasWeb">
-                <el-radio value="是（____个域名）">是</el-radio>
-                <el-radio value="否">否</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item label="网站是否涉及交易/支付/用户数据？">
-              <el-radio-group v-model="formData.part6.hasTransaction">
-                <el-radio value="是">是</el-radio>
-                <el-radio value="否">否</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-divider content-position="left">云防火墙</el-divider>
-            <el-form-item label="是否有多个VPC网络需要隔离管控？">
-              <el-radio-group v-model="formData.part6.multiVpc">
-                <el-radio value="是">是</el-radio>
-                <el-radio value="否">否</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item label="是否需要满足等保合规要求？">
-              <el-radio-group v-model="formData.part6.needCompliance">
-                <el-radio value="是">是</el-radio>
-                <el-radio value="否">否</el-radio>
-              </el-radio-group>
-            </el-form-item>
+            <template v-if="!formData.part6.skipSecurity">
+              <el-divider content-position="left">DDoS 防护</el-divider>
+              <el-form-item label="是否曾被DDoS攻击过？">
+                <el-radio-group v-model="formData.part6.ddosAttacked">
+                  <el-radio value="是（峰值：______ Gbps）">是</el-radio>
+                  <el-radio value="否">否</el-radio>
+                  <el-radio value="不清楚">不清楚</el-radio>
+                </el-radio-group>
+              </el-form-item>
+              <el-form-item label="业务是否容易被攻击？（游戏、电商、金融是重灾区）">
+                <el-radio-group v-model="formData.part6.ddosEasyTarget">
+                  <el-radio value="是">是</el-radio>
+                  <el-radio value="否">否</el-radio>
+                  <el-radio value="不确定">不确定</el-radio>
+                </el-radio-group>
+              </el-form-item>
+              <el-form-item label="需要防护多少个公网IP？">
+                <el-input-number v-model="formData.part6.ddosIpCount" :min="1" :max="100" />
+              </el-form-item>
+              <el-divider content-position="left">Web 应用防火墙 WAF</el-divider>
+              <el-form-item label="是否有网站/Web业务？">
+                <el-radio-group v-model="formData.part6.hasWeb">
+                  <el-radio value="是（____个域名）">是</el-radio>
+                  <el-radio value="否">否</el-radio>
+                </el-radio-group>
+              </el-form-item>
+              <el-form-item label="网站是否涉及交易/支付/用户数据？">
+                <el-radio-group v-model="formData.part6.hasTransaction">
+                  <el-radio value="是">是</el-radio>
+                  <el-radio value="否">否</el-radio>
+                </el-radio-group>
+              </el-form-item>
+              <el-divider content-position="left">云防火墙</el-divider>
+              <el-form-item label="是否有多个VPC网络需要隔离管控？">
+                <el-radio-group v-model="formData.part6.multiVpc">
+                  <el-radio value="是">是</el-radio>
+                  <el-radio value="否">否</el-radio>
+                </el-radio-group>
+              </el-form-item>
+              <el-form-item label="是否需要满足等保合规要求？">
+                <el-radio-group v-model="formData.part6.needCompliance">
+                  <el-radio value="是">是</el-radio>
+                  <el-radio value="否">否</el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </template>
           </el-form>
         </div>
 
@@ -302,10 +310,16 @@
         <div v-show="currentStep === 6">
           <h3 class="step-title">第七部分：TRTC 实时音视频</h3>
           <el-form :model="formData.part7" label-position="top" size="large">
-            <el-form-item label="业务是否需要音视频通话/直播功能？">
+            <el-form-item label="是否需要音视频通话/直播功能？">
+              <el-radio-group v-model="formData.part7.skipTrtc">
+                <el-radio :value="false">需要，继续填写</el-radio>
+                <el-radio :value="true">不需要，跳过此部分</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <template v-if="!formData.part7.skipTrtc">
+            <el-form-item label="主要应用场景？">
               <el-radio-group v-model="formData.part7.needsTrtc">
-                <el-radio value="是">是</el-radio>
-                <el-radio value="否">否</el-radio>
+                <el-radio value="是">需要音视频</el-radio>
                 <el-radio value="不确定">不确定</el-radio>
               </el-radio-group>
             </el-form-item>
@@ -338,6 +352,7 @@
                   <el-radio value="全球">全球</el-radio>
                 </el-radio-group>
               </el-form-item>
+            </template>
             </template>
           </el-form>
         </div>
@@ -409,11 +424,12 @@ const formData = reactive({
     dbAvailability: '', dbReadWriteSep: '', dbBudgetSensitive: ''
   },
   part6: {
+    skipSecurity: false,
     ddosAttacked: '', ddosEasyTarget: '', ddosIpCount: 1,
     hasWeb: '', hasTransaction: '', multiVpc: '', needCompliance: ''
   },
   part7: {
-    needsTrtc: '', trtcScenario: '', trtcConcurrency: '',
+    skipTrtc: false, needsTrtc: '', trtcScenario: '', trtcConcurrency: '',
     trtcLatency: '', trtcRegion: ''
   },
   part8: {

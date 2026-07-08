@@ -50,6 +50,9 @@ export const PRODUCT_SERIES = {
 /**
  * 核心推荐规则（按优先级排列）
  * 每条规则包含：条件判断函数 + 推荐结果
+ * cvm: { series, cpu, memory, count, reason }
+ * cbs: { type, size, reason }
+ * mysql: { arch, cpu, memory, storage, reason }
  */
 export const RECOMMENDATION_RULES = [
   // === 1. 金融/政务（最高优先级） ===
@@ -63,9 +66,21 @@ export const RECOMMENDATION_RULES = [
         data.compliance?.includes('GDPR')
     },
     recommend: () => ({
-      cvm: { series: 'flagship', spec: '8核32G起', count: '2台起', reason: '金融/政务要求高安全、高可靠，旗舰型提供最佳性能和稳定性' },
-      cbs: { type: 'extreme_ssd', size: '500GB起', reason: '金融级业务需要极高IOPS，极速型SSD提供最低延迟' },
-      mysql: { arch: 'triple', spec: '8核32G + 500GB', reason: '核心数据不能丢，三节点架构提供金融级高可用' },
+      cvm: {
+        series: 'flagship',
+        cpu: '8核',
+        memory: '32GB',
+        count: '2台',
+        reason: '金融/政务要求高安全、高可靠，旗舰型提供最佳性能和稳定性'
+      },
+      cbs: { type: 'extreme_ssd', size: '500GB', reason: '金融级业务需要极高IOPS，极速型SSD提供最低延迟' },
+      mysql: {
+        arch: 'triple',
+        cpu: '8核',
+        memory: '32GB',
+        storage: '500GB',
+        reason: '核心数据不能丢，三节点架构提供金融级高可用'
+      },
       security: ['ddos_enterprise', 'waf_enterprise', 'cfw'],
       securityReason: '金融/政务是攻击重灾区，需要全套安全防护满足等保合规',
       billing: '包年包月（长期稳定运行）',
@@ -83,9 +98,21 @@ export const RECOMMENDATION_RULES = [
         data.cpuRequirement === '需要GPU（AI训练/渲染）'
     },
     recommend: () => ({
-      cvm: { series: 'gn_series', spec: 'GN10Xp（V100/T4/A100）', count: '1台起', reason: 'GPU异构计算是AI训练和渲染的唯一选择' },
-      cbs: { type: 'extreme_ssd', size: '1TB起', reason: '训练数据读写量大，需要极高吞吐' },
-      mysql: { arch: 'dual', spec: '4核16G + 200GB', reason: '训练任务管理数据库，双节点即可' },
+      cvm: {
+        series: 'gn_series',
+        cpu: 'GN10Xp',
+        memory: 'V100 / T4 / A100 GPU',
+        count: '1台',
+        reason: 'GPU异构计算是AI训练和渲染的唯一选择'
+      },
+      cbs: { type: 'extreme_ssd', size: '1TB', reason: '训练数据读写量大，需要极高吞吐' },
+      mysql: {
+        arch: 'dual',
+        cpu: '4核',
+        memory: '16GB',
+        storage: '200GB',
+        reason: '训练任务管理数据库，双节点即可'
+      },
       security: ['ddos_standard', 'waf_basic'],
       securityReason: '基础安全防护即可',
       billing: '包年包月（训练任务长期占用）',
@@ -103,15 +130,27 @@ export const RECOMMENDATION_RULES = [
       return types.includes(data.businessType)
     },
     recommend: (data) => ({
-      cvm: { series: 'c_series', spec: '8核16G起', count: '2台起', reason: '高并发场景需要计算型实例，CPU性能优先' },
-      cbs: { type: 'ssd', size: '500GB起', reason: 'SSD云盘保证数据库和应用IO性能' },
-      mysql: { arch: 'cluster', spec: '8核32G + 500GB', reason: '高并发数据库需要集群版支持读写分离' },
+      cvm: {
+        series: 'c_series',
+        cpu: '8核',
+        memory: '16GB',
+        count: '2台',
+        reason: '高并发场景需要计算型实例，CPU性能优先'
+      },
+      cbs: { type: 'ssd', size: '500GB', reason: 'SSD云盘保证数据库和应用IO性能' },
+      mysql: {
+        arch: 'cluster',
+        cpu: '8核',
+        memory: '32GB',
+        storage: '500GB',
+        reason: '高并发数据库需要集群版支持读写分离'
+      },
       security: ['ddos_enterprise', 'waf_enterprise'],
       securityReason: '游戏/直播行业是DDoS攻击重灾区，企业级防护必不可少',
       trtc: { tier: 'enterprise', reason: '大规模并发音视频，需要企业版TRTC全球节点覆盖' },
       extra: ['cdn', 'clb'],
       extraReason: 'CDN加速内容分发，CLB实现多台CVM负载均衡',
-      billing: '包年包月+弹性按量（应对突发流量）',
+      billing: '包年包月 + 弹性按量（应对突发流量）',
       note: '建议搭配弹性伸缩AS，大促/活动期间自动扩容。'
     })
   },
@@ -130,14 +169,17 @@ export const RECOMMENDATION_RULES = [
       return {
         cvm: {
           series: 's_series',
-          spec: isLarge ? '8核16G' : '4核8G',
-          count: isLarge ? '4台起' : '2台',
+          cpu: isLarge ? '8核' : '4核',
+          memory: isLarge ? '16GB' : '8GB',
+          count: isLarge ? '4台' : '2台',
           reason: '电商业务均衡型实例最合适，性价比最高'
         },
-        cbs: { type: isLarge ? 'enhanced_ssd' : 'ssd', size: '500GB起', reason: '商品图片、订单数据需要高可靠性存储' },
+        cbs: { type: isLarge ? 'enhanced_ssd' : 'ssd', size: '500GB', reason: '商品图片、订单数据需要高可靠性存储' },
         mysql: {
           arch: isLarge ? 'cluster' : 'dual',
-          spec: isLarge ? '8核32G + 500GB' : '4核16G + 200GB',
+          cpu: isLarge ? '8核' : '4核',
+          memory: isLarge ? '32GB' : '16GB',
+          storage: isLarge ? '500GB' : '200GB',
           reason: '订单/用户数据必须高可用，双节点起步'
         },
         security: ['ddos_standard', 'waf_enterprise'],
@@ -157,13 +199,25 @@ export const RECOMMENDATION_RULES = [
     priority: 60,
     condition: (data) => {
       return data.cpuRequirement === '需要高主频计算（视频转码/科学计算）' ||
-        data.cpuRequirement === '需要GPU（AI训练/渲染）' || // 但业务类型不是AI
+        data.cpuRequirement === '需要GPU（AI训练/渲染）' ||
         (parseInt(data.dau) > 50000)
     },
     recommend: () => ({
-      cvm: { series: 'c_series', spec: '16核32G起', count: '2台起', reason: '计算密集型必须选择计算型C系列，CPU主频更高' },
-      cbs: { type: 'enhanced_ssd', size: '500GB起', reason: '高IO场景需要增强型SSD保证吞吐' },
-      mysql: { arch: 'cluster', spec: '8核32G + 500GB', reason: '高并发数据库需要集群版' },
+      cvm: {
+        series: 'c_series',
+        cpu: '16核',
+        memory: '32GB',
+        count: '2台',
+        reason: '计算密集型必须选择计算型C系列，CPU主频更高'
+      },
+      cbs: { type: 'enhanced_ssd', size: '500GB', reason: '高IO场景需要增强型SSD保证吞吐' },
+      mysql: {
+        arch: 'cluster',
+        cpu: '8核',
+        memory: '32GB',
+        storage: '500GB',
+        reason: '高并发数据库需要集群版'
+      },
       security: ['ddos_standard', 'waf_basic'],
       securityReason: '基础安全防护',
       billing: '包年包月',
@@ -180,9 +234,21 @@ export const RECOMMENDATION_RULES = [
       return data.cpuRequirement === '需要大量内存（数据库/缓存）'
     },
     recommend: () => ({
-      cvm: { series: 'm_series', spec: '8核64G起', count: '1台起', reason: '大内存场景，内存型M系列性价比最高' },
-      cbs: { type: 'extreme_ssd', size: '1TB起', reason: '数据库需要极低延迟的存储' },
-      mysql: { arch: 'triple', spec: '16核128G + 1TB', reason: '数据库为核心业务，必须三节点最高可用' },
+      cvm: {
+        series: 'm_series',
+        cpu: '8核',
+        memory: '64GB',
+        count: '1台',
+        reason: '大内存场景，内存型M系列性价比最高'
+      },
+      cbs: { type: 'extreme_ssd', size: '1TB', reason: '数据库需要极低延迟的存储' },
+      mysql: {
+        arch: 'triple',
+        cpu: '16核',
+        memory: '128GB',
+        storage: '1TB',
+        reason: '数据库为核心业务，必须三节点最高可用'
+      },
       security: ['ddos_standard', 'waf_basic'],
       securityReason: '基础安全防护，数据库建议放在私有网络VPC内',
       billing: '包年包月',
@@ -204,12 +270,19 @@ export const RECOMMENDATION_RULES = [
       return {
         cvm: {
           series: lowBudget ? 'bf1' : 's_series',
-          spec: lowBudget ? '2核4G' : '4核8G',
+          cpu: lowBudget ? '2核' : '4核',
+          memory: lowBudget ? '4GB' : '8GB',
           count: '1台',
           reason: lowBudget ? '预算有限，蜂驰型BF1性价比最高' : '标准型S系列均衡够用，适合企业官网/OA'
         },
         cbs: { type: 'high_performance', size: '100GB', reason: '官网/OA对IO要求不高，高性能云盘足够' },
-        mysql: { arch: 'dual', spec: '2核4G + 50GB', reason: 'OA数据需要高可用，双节点即可满足' },
+        mysql: {
+          arch: 'dual',
+          cpu: '2核',
+          memory: '4GB',
+          storage: '50GB',
+          reason: 'OA数据需要高可用，双节点即可满足'
+        },
         security: ['waf_basic'],
         securityReason: '有Web业务就需要基础WAF防护',
         extra: data.businessType === '企业官网/展示型网站' ? ['cdn'] : [],
@@ -234,12 +307,19 @@ export const RECOMMENDATION_RULES = [
       return {
         cvm: {
           series: isLarge ? 'c_series' : 's_series',
-          spec: isLarge ? '8核16G' : '4核8G',
-          count: isLarge ? '2台起' : '1台',
+          cpu: isLarge ? '8核' : '4核',
+          memory: isLarge ? '16GB' : '8GB',
+          count: isLarge ? '2台' : '1台',
           reason: '在线教育需要稳定的计算和网络性能'
         },
-        cbs: { type: 'ssd', size: '200GB起', reason: '课程视频和课件需要较好的IO性能' },
-        mysql: { arch: 'dual', spec: '4核16G + 200GB', reason: '学员数据和课程数据需要高可用' },
+        cbs: { type: 'ssd', size: '200GB', reason: '课程视频和课件需要较好的IO性能' },
+        mysql: {
+          arch: 'dual',
+          cpu: '4核',
+          memory: '16GB',
+          storage: '200GB',
+          reason: '学员数据和课程数据需要高可用'
+        },
         security: ['ddos_standard', 'waf_enterprise'],
         securityReason: '教育平台涉及用户数据，需要WAF企业级防护',
         trtc: data.needsTrtc ? { tier: 'standard', reason: '在线课堂需要实时音视频互动' } : null,
@@ -264,7 +344,8 @@ export const RECOMMENDATION_RULES = [
     recommend: () => ({
       cvm: {
         series: 'lightweight',
-        spec: '2核2G ~ 2核4G',
+        cpu: '2核',
+        memory: '2GB',
         count: '1台',
         reason: '轻量应用服务器开箱即用，适合个人站点和测试环境，性价比最高'
       },

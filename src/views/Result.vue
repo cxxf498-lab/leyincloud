@@ -19,7 +19,8 @@
       <el-descriptions :column="2" border>
         <el-descriptions-item label="产品系列">{{ result.cvm.series }}</el-descriptions-item>
         <el-descriptions-item label="系列说明">{{ result.cvm.seriesNote }}</el-descriptions-item>
-        <el-descriptions-item label="推荐规格">{{ result.cvm.spec }}</el-descriptions-item>
+        <el-descriptions-item label="CPU 核数">{{ result.cvm.cpu }}</el-descriptions-item>
+        <el-descriptions-item label="内存大小">{{ result.cvm.memory }}</el-descriptions-item>
         <el-descriptions-item label="推荐数量">{{ result.cvm.count }}</el-descriptions-item>
         <el-descriptions-item label="推荐理由" :span="2">{{ result.cvm.reason }}</el-descriptions-item>
       </el-descriptions>
@@ -54,7 +55,9 @@
       <el-descriptions :column="2" border>
         <el-descriptions-item label="架构类型">{{ result.mysql.arch }}</el-descriptions-item>
         <el-descriptions-item label="架构说明">{{ result.mysql.archNote }}</el-descriptions-item>
-        <el-descriptions-item label="推荐规格">{{ result.mysql.spec }}</el-descriptions-item>
+        <el-descriptions-item label="CPU 核数">{{ result.mysql.cpu }}</el-descriptions-item>
+        <el-descriptions-item label="内存大小">{{ result.mysql.memory }}</el-descriptions-item>
+        <el-descriptions-item label="存储容量">{{ result.mysql.storage }}</el-descriptions-item>
         <el-descriptions-item label="推荐理由" :span="2">{{ result.mysql.reason }}</el-descriptions-item>
       </el-descriptions>
     </el-card>
@@ -154,7 +157,7 @@ import { matchRecommendation } from '../engine/matcher.js'
 const router = useRouter()
 const result = ref({
   summary: '',
-  cvm: { series: '', seriesNote: '', spec: '', count: '', reason: '' },
+  cvm: { series: '', seriesNote: '', cpu: '', memory: '', count: '', reason: '' },
   cbs: { type: '', typeNote: '', size: '', reason: '' },
   mysql: null,
   mysqlReason: '',
@@ -196,18 +199,18 @@ function copyResult() {
 
   text += `☁️ 云服务器 CVM\n`
   text += `  产品系列：${r.cvm.series}\n`
-  text += `  推荐规格：${r.cvm.spec}\n`
-  text += `  推荐数量：${r.cvm.count}\n`
-  text += `  推荐理由：${r.cvm.reason}\n\n`
+  text += `  CPU：${r.cvm.cpu}  /  内存：${r.cvm.memory}\n`
+  text += `  数量：${r.cvm.count}\n`
+  text += `  理由：${r.cvm.reason}\n\n`
 
   text += `💾 云硬盘 CBS\n`
-  text += `  硬盘类型：${r.cbs.type}\n`
-  text += `  推荐容量：${r.cbs.size}\n\n`
+  text += `  类型：${r.cbs.type}\n`
+  text += `  容量：${r.cbs.size}\n\n`
 
   if (r.mysql) {
     text += `🗄️ 云数据库 MySQL\n`
-    text += `  架构类型：${r.mysql.arch}\n`
-    text += `  推荐规格：${r.mysql.spec}\n\n`
+    text += `  架构：${r.mysql.arch}\n`
+    text += `  CPU：${r.mysql.cpu}  /  内存：${r.mysql.memory}  /  存储：${r.mysql.storage}\n\n`
   }
 
   if (r.security && r.security.items.length > 0) {

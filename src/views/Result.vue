@@ -122,8 +122,7 @@
     <div v-if="pricing && pricing.items.length" class="product-card">
       <div class="pc-header">
         <AppIcons name="dollar" :size="20" />
-        <span>月付报价明细（上浮 {{ (pricing.markupRate * 100).toFixed(0) }}%）</span>
-        <span class="pc-tag">仅供参考</span>
+        <span>预估月付费用</span>
       </div>
       <div class="pc-body">
         <table class="price-table">
@@ -131,27 +130,24 @@
             <tr>
               <th>产品</th>
               <th>配置</th>
-              <th class="num">官方参考价</th>
-              <th class="num">报价</th>
+              <th class="num">月付费用</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in pricing.items" :key="item.product">
               <td>{{ item.product }}</td>
               <td>{{ item.spec }}</td>
-              <td class="num">¥{{ item.official.toLocaleString() }}</td>
               <td class="num offer">¥{{ item.offer.toLocaleString() }}</td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="2" class="total-label">合计</td>
-              <td class="num">¥{{ pricing.total.toLocaleString() }}</td>
+              <td colspan="2" class="total-label">预估合计</td>
               <td class="num total">¥{{ pricing.totalWithMarkup.toLocaleString() }}/月</td>
             </tr>
           </tfoot>
         </table>
-        <p class="pricing-note">以上为月度预估报价，已上浮 {{ (pricing.markupRate * 100).toFixed(0) }}%，不低于官方原价。实际价格以腾讯云官网为准。</p>
+        <p class="pricing-note">以上为月度预估费用，实际价格以腾讯云官网为准。</p>
       </div>
     </div>
 

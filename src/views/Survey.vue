@@ -56,9 +56,10 @@
                 <el-radio value="是">是</el-radio>
                 <el-radio value="否">否</el-radio>
               </el-radio-group>
-              <div v-if="formData.part1.urgent === '是'" class="sub-input">
-                <el-input v-model="formData.part1.urgentMonth" placeholder="请输入月份" style="width: 160px">
-                  <template #append>月内上线</template>
+              <div v-if="formData.part1.urgent === '是'" class="inline-field">
+                <span class="inline-label">请填写</span>
+                <el-input v-model="formData.part1.urgentMonth" placeholder="预计几个月内上线" style="width: 200px">
+                  <template #append>月内</template>
                 </el-input>
               </div>
             </el-form-item>
@@ -68,8 +69,9 @@
                 <el-radio value="其他云厂商">其他云厂商</el-radio>
                 <el-radio value="从未上云">从未上云</el-radio>
               </el-radio-group>
-              <div v-if="formData.part1.currentDeploy === '其他云厂商'" class="sub-input">
-                <el-input v-model="formData.part1.deployProvider" placeholder="请输入云厂商名称，如：阿里云" style="width: 220px" />
+              <div v-if="formData.part1.currentDeploy === '其他云厂商'" class="inline-field">
+                <span class="inline-label">请填写</span>
+                <el-input v-model="formData.part1.deployProvider" placeholder="云厂商名称，如：阿里云" style="width: 240px" />
               </div>
             </el-form-item>
           </el-form>
@@ -521,7 +523,18 @@ function submitForm() {
 .field-hint { margin-left: 10px; color: var(--c-text2); font-size: 12px; }
 .form-actions { display: flex; justify-content: center; gap: 12px; }
 .form-actions .el-button { min-width: 120px; font-weight: 500; }
-.sub-input { margin-top: 6px; padding-left: 2px; }
+.inline-field {
+  margin-top: 10px;
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  background: #F9FAFB;
+  border-left: 3px solid var(--c-primary);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.inline-label {
+  font-size: 12px; font-weight: 600; color: var(--c-primary);
+  white-space: nowrap;
+}
 
 /* 跳过/需要的切换按钮 */
 .toggle-row {

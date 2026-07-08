@@ -2,7 +2,7 @@
   <div class="result">
     <div class="result-header">
       <h2>推荐方案</h2>
-      <p class="subtitle">根据需求自动匹配的腾讯云产品配置</p>
+      <p class="subtitle">根据需求自动匹配的乐银云产品配置</p>
       <p class="summary" v-if="result.summary">{{ result.summary }}</p>
     </div>
 
@@ -163,7 +163,7 @@ function newSurvey() { sessionStorage.removeItem('survey_result'); router.push('
 
 function copyResult() {
   const r = result.value
-  let t = '【腾讯云产品配置推荐方案】\n\n'
+  let t = '【乐银云产品配置推荐方案】\n\n'
   if (r.summary) t += `${r.summary}\n\n`
   t += `云服务器 CVM\n  ${r.cvm.series} / CPU ${r.cvm.cpu} / 内存 ${r.cvm.memory} / 带宽 ${r.cvm.bandwidth} / ${r.cvm.count}\n\n`
   t += `云硬盘 CBS\n  ${r.cbs.type} / ${r.cbs.size}\n\n`
